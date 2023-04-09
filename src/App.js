@@ -7,24 +7,44 @@ import { Details } from "./pages/Details";
 import { List } from "./pages/List";
 import { Login } from "./pages/Login";
 import SignUp from "./components/SignUp";
-import { AuthContextProvider } from "./context/AuthContext";
+import { UserContextProvider } from "./context/AuthContext";
 import Order from "./components/Order";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
-    <AuthContextProvider>
-      <div className="relative bg-slate-200 min-h-screen">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Products />}></Route>
-          <Route path="/products/:id" element={<Details />}></Route>
-          <Route path="/lists" element={<List />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/signup" element={<SignUp />}></Route>
-          <Route path="/order" element={<Order/>}></Route>
-        </Routes>
-      </div>
-    </AuthContextProvider>
+    <div className="relative bg-slate-200 min-h-screen">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Products />}></Route>
+        <Route
+          path="/products/:id"
+          element={
+            <ProtectedRoute>
+              <Details />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/lists"
+          element={
+            <ProtectedRoute>
+              <List />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/signup" element={<SignUp />}></Route>
+        <Route
+          path="/order"
+          element={
+            <ProtectedRoute>
+              <Order />
+            </ProtectedRoute>
+          }
+        ></Route>
+      </Routes>
+    </div>
   );
 };
 

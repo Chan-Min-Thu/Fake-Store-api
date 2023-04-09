@@ -5,20 +5,19 @@ import { TfiShoppingCart } from "react-icons/tfi";
 import { BiSearchAlt2 } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { ProductContext } from "../context/Context";
-import { UserAuth } from "../context/AuthContext";
+import { AuthUser } from "../context/AuthContext";
+
 
 export const Navbar = () => {
   const { list, search, setSearch } = useContext(ProductContext);
   const [open, setOpen] = useState(false);
   const [profile, setProfile] = useState(false);
-  const { user, logOut } = UserAuth();
   const navigate = useNavigate();
-
-  const handleLogOut = async () => {
+  const { currentUser,logOut } = AuthUser();
+  const handleLogOut = async()=>{
     await logOut();
-    console.log("You are logout...");
-    navigate("/");
-  };
+  }
+
   return (
     <div className="w-full h-20 bg-slate-200 shadow-md fixed z-50">
       <div className="md:w-10/12 relative w-full m-auto">
@@ -48,7 +47,7 @@ export const Navbar = () => {
                   className="text-xl md:hidden inline mb-2"
                 />
               </div>
-              <div className="relative mr-6">
+              <div  onClick={() => navigate("/lists")} className="relative mr-6">
                 <span
                   className={`${
                     list.length ? "inline" : "hidden"
@@ -57,7 +56,7 @@ export const Navbar = () => {
                   {list?.length}
                 </span>
                 <TfiShoppingCart
-                  onClick={() => navigate("/lists")}
+                 
                   className="text-xl"
                 />
               </div>
@@ -74,7 +73,7 @@ export const Navbar = () => {
                   } w-40 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800`}
                 >
                   <div className="px-3 py-2 m-auto bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
-                    {user ? (
+                    {currentUser !== null ? (
                       <button
                         onClick={() => handleLogOut()}
                         className="font-semibold m-auto text-gray-900 "
@@ -90,9 +89,9 @@ export const Navbar = () => {
                     )}
                   </div>
                   <div className="px-2 py-2">
-                    {user ? (
+                    {currentUser !== null ? (
                       <p className="text-sm font-semibold">
-                        Email : {user.email}
+                        Email : {currentUser?.email}
                       </p>
                     ) : (
                       <p className="text-sm font-semibold"> Please log in.</p>

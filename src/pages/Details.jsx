@@ -3,10 +3,12 @@ import { HiStar } from "react-icons/hi";
 import { ProductContext } from "../context/Context";
 import { RxCross2 } from "react-icons/rx"
 import { useNavigate } from "react-router-dom";
+import { AuthUser } from "../context/AuthContext";
 
 export const Details = () => {
   const { product,dispatchProduct } = useContext(ProductContext);
   const nav = useNavigate();
+  const { user } = AuthUser();
 
   return (
     <div className="flex md:flex-row flex-wrap justify-between w-full m-auto pt-28">
@@ -29,7 +31,7 @@ export const Details = () => {
             <span className="font-bold">${product?.price}</span>
           </div>
           <div className="w-full text-start">
-          <button onClick={()=>dispatchProduct({type:"ADD",payload:product})} className="border-blue-500 border-2 p-2 text-sm rounded">Add to Cart</button>
+          <button disabled={user} onClick={()=>dispatchProduct({type:"ADD",payload:product})} className="border-blue-500 border-2 p-2 text-sm rounded">Add to Cart</button>
           </div>
         </div>
       </div>

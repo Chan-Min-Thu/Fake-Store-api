@@ -3,11 +3,13 @@ import { MdAddShoppingCart } from "react-icons/md";
 import { HiStar } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { ProductContext } from "../context/Context";
+import { AuthUser } from "../context/AuthContext";
 
 export const Product = ({ product }) => {
-  const { fetchEachData,dispatchProduct } = useContext(ProductContext);
+  const { fetchEachData, dispatchProduct } = useContext(ProductContext);
   const title = product.title;
   const [add, setAdd] = useState(false);
+  const { currentUser } = AuthUser();
   return (
     <div
       onClick={() => fetchEachData(product.id)}
@@ -29,12 +31,15 @@ export const Product = ({ product }) => {
       </Link>
       <div className="flex justify-between m-auto mx-4 mt-5">
         <span className="font-bold text-sm">${product?.price}</span>
-        <div onClick={()=>dispatchProduct({type:"ADD",payload:product})}
-          className={`"${add ? "bg-green-300" : "bg-blue-300"} w-2 mr-4 rounded-4xl select-none cursor-pointer`}
+        <div
+          onClick={() => dispatchProduct({ type: "ADD", payload: product })}
+          className={`"${
+            add ? "bg-green-300" : "bg-blue-300"
+          } ${currentUser?"inline":"hidden"}  w-2 mr-4 rounded-4xl select-none cursor-pointer`}
         >
           <MdAddShoppingCart
             onClick={() => setAdd(true)}
-            className={`${
+            className={`${ 
               add ? "text-green-600 bg-green-200" : "text-blue-600 bg-blue-200"
             } text-xl `}
           />

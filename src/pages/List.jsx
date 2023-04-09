@@ -125,7 +125,7 @@ export const List = () => {
             {list.length? (
               <tr className="bg-white-200  border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td className="md:px-6 px-1 py-4 text-xl">
-                  <button onClick={nav('/order')} className="font-bold text-yellow-500 border-yellow-200 bg-yellow-200 rounded px-2 py-1 hover:border-yellow-300 border-2">Order</button>
+                  <button onClick={()=>nav('/order')} className="font-bold text-yellow-500 border-yellow-200 bg-yellow-200 rounded px-2 py-1 hover:border-yellow-300 border-2">Order</button>
                 </td>
                 <td className="md:px-6 px-1 py-4 text-xl font-semibold">Total</td>
                 <td className="md:px-6 px-1 py-4  text-right text-xl">
